@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
 set -e
-set -x
 
 CACHE_DIR=$2/oracle
 BP_DIR=$(cd $(dirname ${0:-}); cd ..; pwd)
