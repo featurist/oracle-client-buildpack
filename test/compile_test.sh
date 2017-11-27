@@ -8,6 +8,6 @@ testCompile() {
 
   . $BUILDPACK_HOME/export
   assertEquals $OCI_LIB_DIR "$CACHE_DIR/oracle/instantclient"
-  assertEquals $OCI_INCLUDE_DIR "$CACHE_DIR/oracle/instantclient/sdk/include"
+  assertEquals $OCI_INC_DIR "$CACHE_DIR/oracle/instantclient/sdk/include"
   assertTrue "[ -d $OCI_INCLUDE_DIR ]"
 }
