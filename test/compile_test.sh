@@ -7,7 +7,7 @@ testCompile() {
   assertCaptured "Oracle Client Installed"
 
   . $BUILDPACK_HOME/export
-  assertEquals $OCI_LIB_DIR "$CACHE_DIR/oracle/instantclient"
-  assertEquals $OCI_INC_DIR "$CACHE_DIR/oracle/instantclient/sdk/include"
+  assertEquals $OCI_LIB_DIR "$BUILDPACK_HOME/.oracle-build/instantclient"
+  assertEquals $OCI_INC_DIR "$BUILDPACK_HOME/.oracle-build/instantclient/sdk/include"
   assertTrue "[ -d $OCI_INCLUDE_DIR ]"
 }
