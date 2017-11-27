@@ -3,7 +3,7 @@
 set -e
 
 BP_DIR=$(cd $(dirname ${0:-}); cd ..; pwd)
-CLIENT_BUILD_DIR=$BP_DIR/.oracle-build
+CLIENT_BUILD_DIR=$1/.oracle-build
 
 echo "-----> Installing Oracle Client"
 
