@@ -9,5 +9,5 @@ testCompile() {
   . $BUILDPACK_HOME/export
   assertEquals $OCI_LIB_DIR "$BUILDPACK_HOME/.oracle-build/instantclient"
   assertEquals $OCI_INC_DIR "$BUILDPACK_HOME/.oracle-build/instantclient/sdk/include"
-  assertTrue "[ -d $OCI_INCLUDE_DIR ]"
+  assertTrue "OCI_INC_DIR missing" "[ -d '${OCI_INC_DIR}' ]"
 }
