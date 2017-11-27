@@ -17,8 +17,8 @@ unzip instantclient-basic-linux.x64-12.1.0.2.0.zip
 unzip instantclient-sdk-linux.x64-12.1.0.2.0.zip
 
 mv $CACHE_DIR/instantclient{_12_1,}
-ln -s $CACHE_DIR/instantclient/libclntsh.so.12.1 $CACHE_DIR/instantclient/libclntsh.so
-ln -s $CACHE_DIR/instantclient/libocci.so.12.1 $CACHE_DIR/instantclient/libocci.so
+ln -f -s $CACHE_DIR/instantclient/libclntsh.so.12.1 $CACHE_DIR/instantclient/libclntsh.so
+ln -f -s $CACHE_DIR/instantclient/libocci.so.12.1 $CACHE_DIR/instantclient/libocci.so
 export LD_LIBRARY_PATH=$CACHE_DIR/instantclient/${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}
 /sbin/ldconfig -C $CACHE_DIR/ldconfig_cache
 
