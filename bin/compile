@@ -3,27 +3,33 @@
 set -e
 
 BP_DIR=$(cd $(dirname ${0:-}); cd ..; pwd)
-CLIENT_BUILD_DIR=$1/.oracle-build
+BUILD_DIR=$1
+CACHE_DIR=$2
+CLIENT_BUILD_DIR=$BUILD_DIR/.oracle-build
 
 echo "-----> Installing Oracle Client"
 
 mkdir -p $CLIENT_BUILD_DIR
-cd $CLIENT_BUILD_DIR
 
-curl -L https://github.com/PaulCampbell/docker-node-oracle/raw/master/oracle/linux/instantclient-basic-linux.x64-12.1.0.2.0.zip > instantclient-basic-linux.x64-12.1.0.2.0.zip
-curl -L https://github.com/PaulCampbell/docker-node-oracle/raw/master/oracle/linux/instantclient-sdk-linux.x64-12.1.0.2.0.zip > instantclient-sdk-linux.x64-12.1.0.2.0.zip
+cd $CLIENT_BUILD_DIR
+curl -s -S -L https://github.com/PaulCampbell/docker-node-oracle/raw/master/oracle/linux/instantclient-basic-linux.x64-12.1.0.2.0.zip > instantclient-basic-linux.x64-12.1.0.2.0.zip
+curl -s -S -L https://github.com/PaulCampbell/docker-node-oracle/raw/master/oracle/linux/instantclient-sdk-linux.x64-12.1.0.2.0.zip > instantclient-sdk-linux.x64-12.1.0.2.0.zip
 unzip instantclient-basic-linux.x64-12.1.0.2.0.zip && rm instantclient-basic-linux.x64-12.1.0.2.0.zip
 unzip instantclient-sdk-linux.x64-12.1.0.2.0.zip && rm instantclient-sdk-linux.x64-12.1.0.2.0.zip
+mv instantclient{_12_1,}
+cd -
 
-mv $CLIENT_BUILD_DIR/instantclient{_12_1,}
-ln -s $CLIENT_BUILD_DIR/instantclient/libclntsh.so.12.1 $CLIENT_BUILD_DIR/instantclient/libclntsh.so
-ln -s $CLIENT_BUILD_DIR/instantclient/libocci.so.12.1 $CLIENT_BUILD_DIR/instantclient/libocci.so
+cd $BUILD_DIR
+ln -s .oracle-build/instantclient/libclntsh.so.12.1 .oracle-build/instantclient/libclntsh.so
+ln -s .oracle-build/instantclient/libocci.so.12.1 .oracle-build/instantclient/libocci.so
+cd -
+
 export LD_LIBRARY_PATH=$CLIENT_BUILD_DIR/instantclient/${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}
-/sbin/ldconfig -C $CLIENT_BUILD_DIR/ldconfig_cache
+/sbin/ldconfig -C $CACHE_DIR/ldconfig_cache
 
 cat <<EOT > $BP_DIR/export
-export OCI_LIB_DIR=$CLIENT_BUILD_DIR/instantclient
-export OCI_INC_DIR=$CLIENT_BUILD_DIR/instantclient/sdk/include
+export OCI_LIB_DIR=.oracle-build/instantclient
+export OCI_INC_DIR=.oracle-build/instantclient/sdk/include
 EOT
 
 cat $BP_DIR/export
