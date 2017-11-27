@@ -27,4 +27,6 @@ export OCI_LIB_DIR=$CACHE_DIR/instantclient
 export OCI_INCLUDE_DIR=$CACHE_DIR/instantclient/sdk/include
 EOT
 
+cat $BP_DIR/export
+
 echo "-----> Oracle Client Installed"
