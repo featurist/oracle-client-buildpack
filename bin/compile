@@ -17,21 +17,22 @@ curl -s -S -L https://github.com/PaulCampbell/docker-node-oracle/raw/master/orac
 unzip instantclient-basic-linux.x64-12.1.0.2.0.zip && rm instantclient-basic-linux.x64-12.1.0.2.0.zip
 unzip instantclient-sdk-linux.x64-12.1.0.2.0.zip && rm instantclient-sdk-linux.x64-12.1.0.2.0.zip
 mv instantclient{_12_1,}
-cd -
-
-cd $BUILD_DIR
-ln -s .oracle-build/instantclient/libclntsh.so.12.1 .oracle-build/instantclient/libclntsh.so
-ln -s .oracle-build/instantclient/libocci.so.12.1 .oracle-build/instantclient/libocci.so
-cd -
-
-export LD_LIBRARY_PATH=$CLIENT_BUILD_DIR/instantclient/${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}
-/sbin/ldconfig -C $CACHE_DIR/ldconfig_cache
+cd instantclient
+ln -s libclntsh.so.12.1 libclntsh.so
+ln -s libocci.so.12.1 libocci.so
 
 cat <<EOT > $BP_DIR/export
-export OCI_LIB_DIR=.oracle-build/instantclient
-export OCI_INC_DIR=.oracle-build/instantclient/sdk/include
+export LD_LIBRARY_PATH=$CLIENT_BUILD_DIR/instantclient/${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}
+export OCI_LIB_DIR=$CLIENT_BUILD_DIR/instantclient
+export OCI_INC_DIR=$CLIENT_BUILD_DIR/instantclient/sdk/include
 EOT
 
 cat $BP_DIR/export
+
+if [ ! -d "$BUILD_DIR/.profile.d" ]; then
+  mkdir $BUILD_DIR/.profile.d
+fi
+
+cp $BP_DIR/profile/* $BUILD_DIR/.profile.d/
 
 echo "-----> Oracle Client Installed"
