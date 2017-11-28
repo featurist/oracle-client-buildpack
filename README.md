@@ -14,6 +14,7 @@ Either add `https://github.com/featurist/oracle-client-buildpack` to `.buildpack
 
 ```
 heroku create --buildpack https://github.com/heroku/heroku-buildpack-testrunner
+heroku buildpacks:add --index 1 https://github.com/heroku/heroku-buildpack-apt
 ```
 
 ### Run
