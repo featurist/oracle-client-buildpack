@@ -17,7 +17,6 @@ testCompile() {
   assertTrue "OCI_INC_DIR missing" "[ -d '${OCI_INC_DIR}' ]"
 
   . $BUILD_DIR/.profile.d/oracle-driver-buildpack-runtime-env.sh
-  # assertTrue "Runtime \$LD_LIBRARY_PATH '$LD_LIBRARY_PATH' should contain '$HOME/.oracle-build/instantclient/'" "[[ '$LD_LIBRARY_PATH' == *'$HOME/.oracle-build/instantclient/'* ]]"
   assertEquals ${LD_LIBRARY_PATH%%:*} "$HOME/.oracle-build/instantclient/"
   assertEquals $OCI_LIB_DIR "$HOME/.oracle-build/instantclient"
   assertEquals $OCI_INC_DIR "$HOME/.oracle-build/instantclient/sdk/include"
