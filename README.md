@@ -1,32 +1,34 @@
 # Description
 
-Buildpack adds Oracle Client libraries.
+This buildpack adds the [Oracle Client libraries](https://www.oracle.com/database/technologies/instant-client.html).
 
-It is intended to be used in conjunction with other buildpacks (e.g. node) for apps that require Oracle db connection.
+It is intended to be used in conjunction with other buildpacks (e.g. node) for apps that require Oracle db connection: 
+
+```bash
+$ heroku buildpacks
+=== <your-heroku-app> Buildpack URLs
+1. heroku-community/apt
+2. https://github.com/observablehq/oracle-instant-client-buildpack
+3. heroku/nodejs
+```
 
 ## Usage
 
-Either add `https://github.com/featurist/oracle-client-buildpack` to `.buildpacks` or set `BUILDPACK_URL=https://github.com/featurist/oracle-client-buildpack`
-You also need API buildpack, preceding this one. And an `Aptfile` in the root of your app containing:
+You will need the [heroku-buildpack-apt](https://github.com/heroku/heroku-buildpack-apt) buildpack, **preceding** this one. 
+
+```bash
+$ heroku buildpacks:set https://github.com/heroku/heroku-buildpack-apt
+```
+
+And an `Aptfile` in the root of your app containing:
 
 ```
 libaio1
 ```
 
-## Testing
+Then add the `oracle-instant-client-buildpack` to the list of buildpacks: 
 
-### Setup
-
-```
-heroku create --buildpack https://github.com/heroku/heroku-buildpack-testrunner
+```bash
+$ heroku buildpacks:set https://github.com/observablehq/oracle-instant-client-buildpack
 ```
 
-### Run
-
-```
-git push heroku master
-heroku run tests
-```
-
-## We're Hiring!
-Featurist provides full stack, feature driven development teams. Want to join us? Check out [our career opportunities](https://www.featurist.co.uk/careers/).
