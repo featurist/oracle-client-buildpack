@@ -4,8 +4,8 @@ set -e
 
 BP_DIR=$(cd $(dirname ${0:-}); cd ..; pwd)
 BUILD_DIR=$1
-CACHE_DIR=$2
 CLIENT_BUILD_DIR=$BUILD_DIR/.oracle-build
+BUILDPACK_DIR="$(dirname "$(dirname "$0")")"
 
 echo "-----> Installing Oracle Client"
 
@@ -34,3 +34,13 @@ fi
 cp $BP_DIR/profile/* $BUILD_DIR/.profile.d/
 
 echo "-----> Oracle Client Installed"
+
+echo "-----> Oracle Client Certificate"
+SOURCE_FILE=$BUILD_DIR/bin/pki.zip
+DEST=$BUILD_DIR/etc/pki
+
+echo "----->  Oracle Client Certificate: unzipping ${SOURCE_FILE} certificate to ${DEST}"
+mkdir -p $DEST
+unzip $SOURCE_FILE -d $DEST
+
+echo "-----> Oracle Client Certificate: installed"
